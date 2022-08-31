@@ -1,0 +1,17 @@
+{
+  "appDir": "./src",
+  "routing": true,
+  "mode": "development",
+  "css": {
+    "theme": {
+      "fontFamily": {
+        "sans": ["Helvetica", "sans-serif"],
+        "serif": ["Times", "serif"]
+      },
+      "extend": {
+        "colors": { "hotpink": "pink" },
+        "spacing": { "128": "32rem", "144": "36rem" }
+      }
+    }
+  }
+}

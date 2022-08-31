@@ -1,0 +1,13 @@
+{
+  "name": "example-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "npx lasso",
+    "setup-local": "cd ../lib && yarn build && cd ../example && yarn remove lasso && yarn add file:../lib"
+  },
+  "dependencies": {
+    "lasso": "file:../lib"
+  }
+}
