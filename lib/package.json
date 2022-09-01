@@ -4,17 +4,20 @@
   "main": "./dist/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "dev": "tsc && node ./dist/server/index.js --watch",
+    "start": "tsc && node ./dist/server/index.js"
   },
   "bin": {
     "lasso": "./dist/server/index.js"
   },
   "dependencies": {
-    "@esbuild-plugins/tsconfig-paths": "^0.0.4",
     "@types/jsdom": "^20.0.0",
     "@types/mkdirp": "^1.0.2",
     "@types/node": "^18.7.6",
+    "@types/nodemon": "^1.19.2",
     "@types/recursive-readdir": "^2.2.1",
+    "@types/ws": "^8.5.3",
     "esbuild": "^0.15.5",
     "esbuild-node-externals": "^1.5.0",
     "esbuild-ts-paths": "^1.1.3",
@@ -23,15 +26,16 @@
     "jsdom": "^20.0.0",
     "mkdirp": "^1.0.4",
     "node-fetch": "^3.2.10",
+    "nodemon": "^2.0.19",
     "pino-pretty": "^9.1.0",
     "postcss": "^8.4.16",
     "recursive-readdir": "^2.2.2",
     "tailwindcss": "^3.1.8",
-    "ts-node": "^10.9.1",
-    "ts-node-dev": "^2.0.0",
+    "ts-deepmerge": "^3.0.0",
     "tsc-alias": "^1.7.0",
     "tsconfig-paths": "^4.1.0",
     "twind": "^0.16.17",
-    "typescript": "^4.8.2"
+    "typescript": "^4.8.2",
+    "ws": "^8.8.1"
   }
 }

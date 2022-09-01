@@ -18,8 +18,14 @@ export type Handler = (server: FastifyInstance, route: string) => void;
 export type LibConfig = {
   appDir: string;
   routing?: boolean;
-  css?: Configuration;
+  css: Configuration | null;
   mode: "production" | "development";
+  global?: {
+    styles?: string[];
+    scripts?: string[];
+  };
+  watchMode: boolean;
+  WOOOOOOOOOOOOOOOOOOOOOOOOO?: boolean;
 };
 
 /** Middleware type, in case we add functionality to the node. */

@@ -4,6 +4,7 @@ import { paths } from "./consts";
 
 import { replaceTscAliasPaths } from "tsc-alias";
 import path from "path";
+import { LibConfig } from "lasso";
 
 const globOpts = {
   ignore: ["node_modules/**/*"],
@@ -22,16 +23,16 @@ const browserOpts = (
   platform: "browser",
 });
 
-export async function bundleJS(
-  mode: "production" | "development" = "production"
-) {
+const dev = (config: LibConfig) => !!config?.WOOOOOOOOOOOOOOOOOOOOOOOOO;
+
+export async function bundleJS(config: LibConfig) {
   const pages = glob.sync(`./src/pages/**/*.ts`, globOpts);
 
   await esbuild.build({
     outdir: paths.static,
     entryPoints: pages,
     outbase: "src/pages",
-    ...browserOpts(mode),
+    ...browserOpts(config.mode),
   });
 
   const router = path.join(__dirname, "../framework/api/routing.js");
@@ -40,11 +41,12 @@ export async function bundleJS(
     entryPoints: [router],
     outfile: path.join(paths.static, "./router.js"),
     outbase: path.dirname(router),
-    ...browserOpts(mode),
+    ...browserOpts(config.mode),
   });
 }
 
-export async function bundleApp() {
+export async function bundleApp(config: LibConfig) {
+  const isDev = dev(config);
   const pattern = (...exts: string[]) =>
     exts.map((ext) => glob.sync(`./src/**/*${ext}`, globOpts)).flat();
 
@@ -54,7 +56,7 @@ export async function bundleApp() {
     tsconfig: paths.tsConfig,
     target: "es2017",
     entryPoints,
-    outdir: paths.build,
+    outdir: isDev ? paths.pages : paths.build,
     legalComments: "none",
     format: "cjs",
     treeShaking: true,

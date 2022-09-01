@@ -1,6 +1,5 @@
 .env
 dist
-node_modules
-example/node_modules
-example/.lasso
+**/node_modules
+**/.lasso
 lib/node_modules

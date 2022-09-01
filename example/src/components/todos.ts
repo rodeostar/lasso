@@ -1,4 +1,5 @@
 import { useState, useEffect, type FC, map } from "lasso";
+import { makeButton } from "./styles";
 import { TodoListItem, getTodos as TodosXHR, type TodoItem } from "./todo.list";
 
 export const Todos: FC = () => {
@@ -8,7 +9,7 @@ export const Todos: FC = () => {
 
   return ({ html, css }) => {
     const styles = {
-      button: css("text-xs font-medium bg-[#00a3ff] rounded-md px-6 py-2"),
+      button: makeButton(css),
     };
 
     return html`<div>

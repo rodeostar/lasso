@@ -1,6 +1,5 @@
 import { render } from "./render";
 import type { FC } from "../types";
-import { StylesCache } from "../context";
 
 /** Render a component tree and give back its string form, for SSR */
 export async function renderToString<T>(Comp: FC<T>) {
@@ -14,8 +13,5 @@ export async function renderToString<T>(Comp: FC<T>) {
   document.body.innerHTML = "";
 
   /** Return styles and html */
-  return {
-    html,
-    cssCache: StylesCache,
-  };
+  return html;
 }

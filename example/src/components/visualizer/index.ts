@@ -18,12 +18,12 @@ export const GeoRow: FC<GeographyDatum> = stateless(({ props, html }) => {
 
 const GeoPoint: FC<number[]> = stateless(({ props, html, css }) => {
   return html`<span
-    class=${css("bg-black")}
+    class=${css("bg-white")}
     style=${style({
       position: "absolute",
       left: `${props[0]}px`,
       bottom: `${props[1]}px`,
-      background: "black",
+      background: "white",
       "border-radius": "50%",
       width: "3px",
       height: "3px",

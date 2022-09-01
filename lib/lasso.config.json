@@ -1,0 +1,11 @@
+{
+  "appDir": "src",
+  "mode": "production",
+  "css": null,
+  "watchMode": true,
+  "global": {
+    "styles": [],
+    "scripts": []
+  },
+  "WOOOOOOOOOOOOOOOOOOOOOOOOO": true
+}

@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npx lasso",
-    "setup-local": "cd ../lib && yarn build && cd ../example && yarn remove lasso && yarn add file:../lib"
+    "setup-local": "cd ../lib && yarn build && cd ../example && yarn remove lasso && yarn add file:../lib && npx lasso --watch"
   },
   "dependencies": {
     "lasso": "file:../lib"

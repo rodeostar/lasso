@@ -2,7 +2,7 @@ import recursiveReadDir from "recursive-readdir";
 import path from "path";
 import { FastifyInstance } from "fastify";
 import { paths } from "./consts";
-import type { Handler } from "lib";
+import type { Handler } from "../framework/types";
 import { log } from "./logs";
 
 const { info, logs } = log;

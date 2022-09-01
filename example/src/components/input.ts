@@ -9,19 +9,26 @@ export const Input: FC = () => {
 
   return ({ html, css }) => {
     const styles = {
-      textInput: css("border border-[#eee] rounded-md p-2 mt-2"),
+      textInput: css(
+        "bg-[#888] text-black rounded-md p-2 my-2 placeholder-black"
+      ),
     };
 
     return html`<div>
-      <input
-        class=${styles.textInput}
-        type="text"
-        placeholder="Type to update state"
-        onKeyUp=${(e: KeyEvent) => {
-          setMessage(e.target.value);
-        }}
-      />
-      <p>${message() === "" ? "" : `Hello ${message()}`}</p>
+      <label class=${css("flex flex-col")}>
+        Binded input:
+        <input
+          class=${styles.textInput}
+          type="text"
+          placeholder="Type to update state"
+          onKeyUp=${(e: KeyEvent) => {
+            setMessage(e.target.value);
+          }}
+        />
+      </label>
+      <p class=${css("break-all")}>
+        ${message() === "" ? "" : `Hello ${message()}`}
+      </p>
     </div>`;
   };
 };

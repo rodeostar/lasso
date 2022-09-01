@@ -10,26 +10,29 @@ import {
   Todos,
   LegalDrinkingAge,
 } from "~/components";
+import { makeLayout } from "~/components/styles";
 
 /** @Home page route */
 const Home: FC = stateless(({ html, css }) => {
-  const tile = css("p-8 border border-[#eee]");
+  const tile = css(
+    " p-4 border-[12px] border-[#333] bg-[#222] rounded-md text-white"
+  );
   const leadingText = css(
-    "text-xs font-medium w-full text-center bg-[#eee] py-2 mb-4"
+    "text-xs text-white tracking-widest w-full text-center uppercase py-2 mb-4 border-b border-[#666]"
   );
 
   return html`<div>
     ${component(Nav)}
 
-    <main class=${css("max-w-[90%] m-auto py-8 grid gap-4")}>
-      <div class=${css("grid grid-cols-2 gap-4")}>
+    <main class=${makeLayout(css)}>
+      <div class=${css("grid grid-cols-3 gap-8")}>
         <article class=${tile}>
           <h1 class=${leadingText}>Conditional styles</h1>
           ${component(LegalDrinkingAge)}
         </article>
 
         <article class=${tile}>
-          <h1 class=${leadingText}>Renders a component, with provided props</h1>
+          <h1 class=${leadingText}>Render with props</h1>
           ${component(HelloWorld, { message: "props world" })}
         </article>
 
@@ -54,7 +57,7 @@ const Home: FC = stateless(({ html, css }) => {
         </article>
 
         <article class=${tile}>
-          <h1 class=${leadingText}>XHR Requests</h1>
+          <h1 class=${leadingText}>XHR Requests (See network tab)</h1>
           ${component(Todos)}
         </article>
       </div>

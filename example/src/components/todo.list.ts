@@ -26,4 +26,6 @@ export async function getTodos(): Promise<TodoItem[]> {
 export const TodoListItem: FC<TodoItem> =
   () =>
   ({ props: { id, title }, html, css }) =>
-    html`<li><span class=${css("mr-2")}>${id}:</span> ${title}</li>`;
+    html`<li class=${css("capitalize font-serif")}>
+      <span>#${id}</span>: ${title}
+    </li>`;

@@ -16,8 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "blockdom": ["./blockdom/index.ts"],
-      "lib/*": ["./*"],
-      "lib": ["./index.ts"]
+      "lasso": ["./framework/index.ts"]
     }
   },
   "exclude": ["node_modules", "dist"]

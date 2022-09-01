@@ -1,8 +1,11 @@
 import path from "path";
 import mkdirp from "mkdirp";
 import { pathToFileURL } from "url";
+import { rmdir } from "fs/promises";
+import { existsSync } from "fs";
 
 export const paths = {
+  input: "src",
   output: ".lasso",
   build: ".lasso/dist",
   static: ".lasso/assets",
@@ -20,6 +23,15 @@ export const paths = {
 
 /** Ensure directories exist, to avoid read/write errors later on */
 export async function ensureDirectories() {
+  const lasso = path.join(process.cwd(), paths.output);
+  const exists = existsSync(lasso);
+
+  if (exists) {
+    await rmdir(lasso, {
+      recursive: true,
+    });
+  }
+
   const must = [
     paths.output,
     paths.build,

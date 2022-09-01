@@ -4,10 +4,10 @@ import { setup, Configuration, tw } from "twind";
 /** Setup the virtual stylesheet */
 const sheet = virtualSheet();
 
-export function collectStyles(config: Partial<Configuration>) {
+export function collectStyles(config: Partial<Configuration> | undefined) {
   /** Mount user configuration */
   setup({
-    ...config,
+    ...(config || {}),
     sheet,
   });
 
@@ -24,8 +24,8 @@ export function attachStyles(ruleset: Set<string>) {
   /** Reset the stylesheet */
   sheet.reset();
 
-  /**  Run the ruleset through twind */
-  for (const rule of ruleset) tw`${rule}`;
+  /** Run the ruleset through twind */
+  tw([...ruleset]);
 
   return getStyleTagProperties(sheet).textContent;
 }

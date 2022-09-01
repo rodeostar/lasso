@@ -2,10 +2,13 @@
   "appDir": "./src",
   "routing": true,
   "mode": "development",
+  "global": {
+    "styles": ["styles.css"]
+  },
   "css": {
     "theme": {
       "fontFamily": {
-        "sans": ["Helvetica", "sans-serif"],
+        "sans": ["Raleway", "sans-serif"],
         "serif": ["Times", "serif"]
       },
       "extend": {

@@ -9,6 +9,9 @@ export interface DocumentOptions {
   head?: DocumentHead;
   scripts?: string[];
   stylesheets?: string[];
+  name?: string;
+  page?: string;
+  mode?: "production" | "development";
 }
 
 /** Simple HTML minifier */
@@ -21,8 +24,14 @@ function naiveMinify(html: string) {
 }
 
 /** Generates the page layout sent from the server */
-const __Document = ({ body, head, scripts, stylesheets }: DocumentOptions) => {
-  return naiveMinify(`
+const __Document = ({
+  body,
+  head,
+  scripts,
+  stylesheets,
+  mode,
+}: DocumentOptions) => {
+  const template = `
   <!doctype html>
   <html>
     <head>
@@ -42,7 +51,9 @@ const __Document = ({ body, head, scripts, stylesheets }: DocumentOptions) => {
         .join("\n")}
     </body>
   </html>
-`);
+`;
+
+  return mode && mode === "production" ? naiveMinify(template) : template;
 };
 
 export { __Document };
