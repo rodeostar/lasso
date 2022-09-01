@@ -3,6 +3,7 @@ import path from "path";
 import { LibConfig } from "../framework/types";
 import { __Document } from "./document";
 import { readFile, writeFile } from "fs/promises";
+import merge from "ts-deepmerge";
 
 /** Read in and parse a user provided configuration */
 export async function getUserConfig(watchMode = false): Promise<LibConfig> {
@@ -23,10 +24,11 @@ export async function getUserConfig(watchMode = false): Promise<LibConfig> {
     const rawConfiguration = await readFile(lassoConf, "utf-8");
     const parsedConfiguration: LibConfig = JSON.parse(rawConfiguration);
 
-    return {
-      ...defaultConfig,
-      ...parsedConfiguration,
-    };
+    return merge(
+      defaultConfig,
+      parsedConfiguration,
+      process.env.NODE_ENV === "production" ? { mode: "production" } : {}
+    );
   } catch (error) {
     await writeFile(
       lassoConf,

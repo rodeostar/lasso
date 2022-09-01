@@ -18,14 +18,14 @@ const Home: FC = stateless(({ html, css }) => {
     " p-4 border-[12px] border-[#333] bg-[#222] rounded-md text-white"
   );
   const leadingText = css(
-    "text-xs text-white tracking-widest w-full text-center uppercase py-2 mb-4 border-b border-[#666]"
+    "text-xs text-white tracking-widest w-full text-center uppercase py-2 mb-4 pb-4 border-b border-[#666]"
   );
 
   return html`<div>
     ${component(Nav)}
 
     <main class=${makeLayout(css)}>
-      <div class=${css("grid grid-cols-3 gap-8")}>
+      <div class=${css("grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4")}>
         <article class=${tile}>
           <h1 class=${leadingText}>Conditional styles</h1>
           ${component(LegalDrinkingAge)}
