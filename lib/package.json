@@ -4,8 +4,7 @@
   "main": "./dist/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "dev": "ts-node-dev -r tsconfig-paths/register ./server/index.ts"
+    "build": "tsc"
   },
   "bin": {
     "lasso": "./dist/server/index.js"

@@ -1,5 +1,7 @@
-node_modules
+**/.lasso
+**/node_modules
+**/dist
 .vscode
 .gitignore
 README.md
-.lasso
+

@@ -1,6 +1,5 @@
 image:
-	docker build -t example-app .
+	docker build --no-cache -t example-app .
 
-
-lf:
-	npm run dos2unix
+run:
+	docker run -p 8585:8585 example-app:latest
