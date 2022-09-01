@@ -1,4 +1,5 @@
 import { JSDOM } from "jsdom";
+import fetch from "node-fetch";
 
 const jd = new JSDOM();
 const {
@@ -12,7 +13,7 @@ const {
   addEventListener,
 } = jd.window;
 
-globalThis.fetch = require("node-fetch");
+(globalThis as Record<string, unknown>).fetch = fetch;
 globalThis.requestAnimationFrame = requestAnimationFrame;
 globalThis.document = document;
 globalThis.DOMParser = DOMParser;
