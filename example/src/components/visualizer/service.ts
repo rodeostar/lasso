@@ -31,7 +31,7 @@ export const cached = <T>(key: string, url: string) => {
   };
 };
 
-const defaultApiPath = "http://localhost:3000";
+const defaultApiPath = "http://0.0.0.0:8585";
 
 const queryGeo = (baseUrl = defaultApiPath, years: string, geoids: string) =>
   `${baseUrl}?geoids=${geoids}&years=${years}&f=json`;

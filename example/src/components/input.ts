@@ -1,4 +1,4 @@
-import { useState, FC } from "lasso";
+import { useState, type FC } from "lasso";
 
 interface KeyEvent extends Event {
   target: HTMLInputElement;

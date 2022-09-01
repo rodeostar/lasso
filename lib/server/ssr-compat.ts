@@ -12,6 +12,7 @@ const {
   addEventListener,
 } = jd.window;
 
+globalThis.fetch = require("node-fetch");
 globalThis.requestAnimationFrame = requestAnimationFrame;
 globalThis.document = document;
 globalThis.DOMParser = DOMParser;

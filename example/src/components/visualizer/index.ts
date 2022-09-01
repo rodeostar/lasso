@@ -6,11 +6,7 @@ const years = [...new Array(14)]
   .map((_, i) => (new Date().getFullYear() - i).toString())
   .join();
 
-const service = createGeoService<GeographyDatum[]>(
-  "http://127.0.0.1:3000/api/geo",
-  years,
-  "45019"
-);
+const service = createGeoService<GeographyDatum[]>("/api/geo", years, "45019");
 
 export const GeoRow: FC<GeographyDatum> = stateless(({ props, html }) => {
   return html`<li>

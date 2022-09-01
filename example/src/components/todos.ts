@@ -1,5 +1,5 @@
-import { useState, useEffect, FC, map } from "lasso";
-import { TodoListItem, getTodos as TodosXHR, TodoItem } from "./todo.list";
+import { useState, useEffect, type FC, map } from "lasso";
+import { TodoListItem, getTodos as TodosXHR, type TodoItem } from "./todo.list";
 
 export const Todos: FC = () => {
   const [todos, setTodos] = useState<TodoItem[]>([]);

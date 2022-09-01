@@ -1,13 +1,13 @@
-import { component } from "lasso";
-import { CollectHTML, FC } from "lasso/framework/types";
+import { component, type CollectHTML, type FC } from "lasso";
 import { Nav } from "./nav";
+
+const noop: FC =
+  () =>
+  ({ html }) =>
+    html``;
 
 export const layout: FC<{ children: () => CollectHTML }> = () => {
   return ({ html, css, props }) => {
-    const noop: FC =
-      () =>
-      ({ html }) =>
-        html``;
     const child = props?.children || noop;
 
     return html`

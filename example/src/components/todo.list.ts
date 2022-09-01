@@ -11,7 +11,7 @@ export async function getTodos(): Promise<TodoItem[]> {
   const arr = [...new Array(2)].map(async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:3000/api/todos/${Math.floor(Math.random() * 10) + 1}`
+        `/api/todos/${Math.floor(Math.random() * 10) + 1}`
       );
       const j: TodoItem = await response.json();
       return j;
