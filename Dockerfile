@@ -1,22 +1,17 @@
 FROM node:lts-slim as builder
 
-
+# Setup base directory
 WORKDIR /home/app/
-
-# default env
 ARG NODE_ENV=production
-
-# override env
 ENV NODE_ENV=${NODE_ENV}
-
-# get package.json
 COPY . .
 
-
+# Setup lib
 WORKDIR /home/app/lib
 RUN yarn install --frozen-lockfile
 RUN yarn build
 
+# Setup example project
 WORKDIR /home/app/example
 RUN yarn install --frozen-lockfile
 

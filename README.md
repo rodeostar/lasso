@@ -2,6 +2,8 @@
 
 Simple typescript framework.
 
+[View the Demo](https://lasso-h3smx.ondigitalocean.app/) 
+
 Features:
 
 - Fast virtual DOM
