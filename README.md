@@ -5,7 +5,7 @@ Simple typescript framework.
 [View the Demo](https://lasso-h3smx.ondigitalocean.app/) 
 
 
-![image](https://user-images.githubusercontent.com/5882632/187812779-8b10fed4-45b7-4f29-b28e-b7c3ace99206.png)
+![image](https://user-images.githubusercontent.com/5882632/187812779-8b10fed4-45b7-4f29-b28e-b7c3ace99206.png  = 250x250)
 
 
 Features:
