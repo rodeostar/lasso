@@ -13,7 +13,15 @@ const {
   addEventListener,
 } = jd.window;
 
-(globalThis as Record<string, unknown>).fetch = fetch;
+const _importDynamic = new Function("modulePath", "return import(modulePath)");
+
+(globalThis as Record<string, unknown>).fetch = async function fetch<T>(
+  ...args: T[]
+) {
+  const { default: fetch } = await _importDynamic("node-fetch");
+  return fetch(...args);
+};
+
 globalThis.requestAnimationFrame = requestAnimationFrame;
 globalThis.document = document;
 globalThis.DOMParser = DOMParser;
