@@ -15,6 +15,10 @@ Simple typescript framework.
 - API Routes
 - Template  literal templates
 
+
+<img src="https://user-images.githubusercontent.com/5882632/187812779-8b10fed4-45b7-4f29-b28e-b7c3ace99206.png" width="640" height="auto" />
+
+
 ## Application Structure
 Lasso uses convention to determine application routing. 
 
@@ -85,10 +89,6 @@ const HelloWorldHandler: Handler = (server, route) => {
 export default HelloWorldHandler;
 
 ```
-
-
-<img src="https://user-images.githubusercontent.com/5882632/187812779-8b10fed4-45b7-4f29-b28e-b7c3ace99206.png" width="640" height="auto" />
-
 
 ## Components
 Components are built the same way as a page, using the FC type.
