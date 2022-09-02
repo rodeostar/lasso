@@ -1,9 +1,4 @@
 {
-  "ts-node": {
-    "compilerOptions": {
-      "module": "commonjs"
-    }
-  },
   "compilerOptions": {
     "declaration": true,
     "outDir": "dist",
@@ -16,8 +11,8 @@
     "baseUrl": ".",
     "paths": {
       "blockdom": ["./blockdom/index.ts"],
-      "lasso": ["./framework/index.ts"]
+      "@rodeostar/lasso": ["./framework/index.ts"]
     }
   },
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "template"]
 }

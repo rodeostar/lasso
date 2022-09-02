@@ -1,4 +1,11 @@
-import { stateless, useEffect, useState, map, style, type FC } from "lasso";
+import {
+  stateless,
+  useEffect,
+  useState,
+  map,
+  style,
+  type FC,
+} from "@rodeostar/lasso";
 import { computeBarChart } from "./chart";
 import { createGeoService, GeographyDatum } from "./service";
 

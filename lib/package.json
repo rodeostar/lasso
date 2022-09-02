@@ -1,10 +1,23 @@
 {
-  "name": "lasso",
-  "version": "1.0.0",
+  "name": "@rodeostar/lasso",
+  "author": "Noah Damiani",
+  "version": "1.0.6",
   "main": "./dist/index.js",
   "license": "MIT",
+  "keywords": [
+    "typescript",
+    "framework",
+    "blockdom",
+    "ssr",
+    "csr"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rodeostar/lasso.git"
+  },
   "scripts": {
     "build": "tsc",
+    "setup": "tsc && node ./dist/server/index.js --init",
     "dev": "tsc && node ./dist/server/index.js --watch",
     "start": "tsc && node ./dist/server/index.js"
   },

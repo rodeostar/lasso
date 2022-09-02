@@ -1,4 +1,4 @@
-import { stateless } from "lasso";
+import { stateless } from "@rodeostar/lasso";
 import { FC } from "lasso/framework/types";
 
 type Props = {

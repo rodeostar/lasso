@@ -1,4 +1,4 @@
-import type { Handler } from "lasso";
+import type { Handler } from "@rodeostar/lasso";
 
 const HelloWorldHandler: Handler = (server, route) => {
   server.get(route, (_, reply) => {

@@ -1,4 +1,4 @@
-import { map, type FC } from "lasso";
+import { map, type FC } from "@rodeostar/lasso";
 
 type NavItemProps = {
   active?: boolean;

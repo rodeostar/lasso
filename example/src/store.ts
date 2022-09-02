@@ -1,4 +1,4 @@
-import { Store } from "lasso";
+import { Store } from "@rodeostar/lasso";
 
 export type Actions = "increment" | "decrement";
 

@@ -1,5 +1,5 @@
 import { Nav } from "~/components/nav";
-import { component, stateless } from "lasso";
+import { component, stateless } from "@rodeostar/lasso";
 import { makeLayout } from "~/components/styles";
 
 const AboutUs = stateless(

@@ -1,4 +1,4 @@
-import type { FC } from "lasso";
+import type { FC } from "@rodeostar/lasso";
 import { appStorage } from "~/store";
 import { makeExample } from "./styles";
 

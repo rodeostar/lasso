@@ -1,4 +1,4 @@
-import type { Handler, Request } from "lasso";
+import type { Handler, Request } from "@rodeostar/lasso";
 import todos from "./todos";
 
 export interface TodosParams {

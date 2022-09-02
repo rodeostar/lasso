@@ -1,4 +1,4 @@
-import { useState, FC } from "lasso";
+import { useState, FC } from "@rodeostar/lasso";
 import { makeExample, makeButton } from "../styles";
 
 export const Counter: FC = () => {

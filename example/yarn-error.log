@@ -23,8 +23,8 @@ npm manifest:
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-      "dev": "npx lasso --watch",
-      "start": "npx lasso",
+      "dev": "npx @rodeostar/lasso --watch",
+      "start": "npx @rodeostar/lasso",
       "setup-local": "cd ../lib && yarn build && cd ../example && yarn remove lasso && yarn add file:../lib"
     },
     "dependencies": {}

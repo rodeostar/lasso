@@ -1,7 +1,7 @@
 import path from "path";
 import mkdirp from "mkdirp";
 import { pathToFileURL } from "url";
-import { rmdir } from "fs/promises";
+import { rm } from "fs/promises";
 import { existsSync } from "fs";
 
 export const paths = {
@@ -27,18 +27,18 @@ export async function ensureDirectories() {
   const exists = existsSync(lasso);
 
   if (exists) {
-    await rmdir(lasso, {
+    await rm(lasso, {
       recursive: true,
     });
   }
 
   const must = [
-    paths.output,
-    paths.build,
+    "src/pages",
+    "src/api",
     paths.static,
     paths.pages,
     paths.api,
-  ];
+  ].map((p) => path.join(process.cwd(), p));
 
   /** Wait until all directories exist */
   await Promise.all(must.map(mkdirp));

@@ -1,4 +1,4 @@
-import { useState, useEffect, type FC, map } from "lasso";
+import { useState, useEffect, type FC, map } from "@rodeostar/lasso";
 import { makeButton } from "./styles";
 import { TodoListItem, getTodos as TodosXHR, type TodoItem } from "./todo.list";
 

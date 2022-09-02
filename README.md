@@ -5,6 +5,16 @@ Simple typescript framework.
 [View the Demo](https://lasso-h3smx.ondigitalocean.app/) 
 
 
+### Setup:
+
+`npx @rodeostar/lasso --init`
+
+
+### CLI Options:
+
+`--watch` - Dev server mode
+`--init`  - Scaffolds a template in an empty directory
+
 
 ### Features:
 
@@ -44,7 +54,7 @@ Here's an  example of an index.ts file, in the src/pages directory,
 Lasso serves this page at the "/" route of the app.
 ```typescript
 // Import the Functional Component type (FC)
-import type { FC } from "lasso";
+import type { FC } from "@rodeostar/lasso";
 
 // Declare a functional component
 const Home: FC = () => {
@@ -74,7 +84,7 @@ export const __Page = {
 
 ```typescript
 // Import the Handler type
-import type { Handler } from "lasso";
+import type { Handler } from "@rodeostar/lasso";
 
 // Create a handler, and annotate it with the Handler type
 const HelloWorldHandler: Handler = (server, route) => {
@@ -96,7 +106,7 @@ Components are built the same way as a page, using the FC type.
 Here's an example that utilizes Lasso's built in shared store utility:
 
 ```typescript
-import { FC, Store } from "lasso";
+import { FC, Store } from "@rodeostar/lasso";
 import { makeExample, makeButton } from "../styles";
 
 export type Actions = "increment" | "decrement";
@@ -147,58 +157,12 @@ export const StorageCounter: FC = () => {
 
 ```
 
-## Installation
-
-
-*This package is not on NPM yet, these instructions will change.*
-
-Please install this vscode extension beforehand, so that your templates look good: 
-
-[ES6 String HTML](https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html)
-
-
-#### First time  setup:
-
-```bash
-# Clone the codebase
-$ git clone https://github.com/rodeostar/lasso.git
-
-# Open the example app
-$ cd lasso/example
-
-# Build the library
-$ yarn setup
-
-# Start the example app
-$ yarn start
-```
-
-#### Other Commands:
-
-```bash
-# Development server with live reload
-$ yarn dev
-
-# Run the app
-$ yarn start
-
-# Reinstall the library,
-# Useful for framework contributions.
-$ yarn reinstall
-
-# aliases
-$ npx lasso --watch     # yarn dev
-$ npx lasso             # yarn start
-```
-
-
-
 ## In the Future
 This framework was put together quickly. Some future enhancements:
 
 - Better component nesting ergonomics
 - Improvements to development server (specifically performance)
-- `npx lasso --build`
+- `npx @rodeostar/lasso --build`
 - More SASS/CSS options
 - LazyLoad utilities
 

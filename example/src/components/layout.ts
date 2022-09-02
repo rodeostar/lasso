@@ -1,4 +1,4 @@
-import { component, type CollectHTML, type FC } from "lasso";
+import { component, type CollectHTML, type FC } from "@rodeostar/lasso";
 import { Nav } from "./nav";
 
 const noop: FC =

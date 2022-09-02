@@ -1,4 +1,4 @@
-import { useState, FC } from "lasso";
+import { useState, FC } from "@rodeostar/lasso";
 import { makeExample } from "./styles";
 
 /** Legal drinking age */

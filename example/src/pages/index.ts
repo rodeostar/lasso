@@ -1,4 +1,4 @@
-import { FC, component, stateless } from "lasso";
+import { FC, component, stateless } from "@rodeostar/lasso";
 
 import {
   Context,

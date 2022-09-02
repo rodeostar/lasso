@@ -1,0 +1,15 @@
+{
+  "name": "example-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "npx @rodeostar/lasso --watch",
+    "start": "npx @rodeostar/lasso",
+    "reinstall": "cd ../lib && yarn build && cd ../example && yarn remove lasso && yarn add file:../lib",
+    "setup": "yarn && cd ../lib && yarn build && cd ../example && yarn add file:../lib"
+  },
+  "dependencies": {
+    "@rodeostar/lasso": "1.0.1"
+  }
+}

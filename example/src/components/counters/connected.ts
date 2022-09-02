@@ -1,4 +1,4 @@
-import { FC } from "lasso";
+import { FC } from "@rodeostar/lasso";
 import { appStorage } from "~/store";
 import { makeExample, makeButton } from "../styles";
 export const StorageCounter: FC = () => {

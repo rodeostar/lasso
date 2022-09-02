@@ -54,6 +54,27 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@rodeostar/lasso@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@rodeostar/lasso/-/lasso-1.0.6.tgz#177c324c38a9d50d86a87861f4ed5d1b7b4ca02c"
+  integrity sha512-oeoSAme8FzXxyoC3qIyoYBGovRieE9K/W7EYeREJj/aKA20P8640OxKa9Q9DjyALzSY+R1kawAg9vPbrWdRWzA==
+  dependencies:
+    cross-fetch "^3.1.5"
+    esbuild "^0.15.5"
+    fastify "^4.5.2"
+    glob "^8.0.3"
+    jsdom "^20.0.0"
+    mkdirp "^1.0.4"
+    nodemon "^2.0.19"
+    pino-pretty "^9.1.0"
+    recursive-readdir "^2.2.2"
+    tailwindcss "^3.1.8"
+    ts-deepmerge "^3.0.0"
+    tsc-alias "^1.7.0"
+    twind "^0.16.17"
+    typescript "^4.8.2"
+    ws "^8.8.1"
+
 "@tootallnate/once@2":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
@@ -917,25 +938,6 @@ json-schema-traverse@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/json-schema-traverse/-/json-schema-traverse-1.0.0.tgz#ae7bcb3656ab77a73ba5c49bf654f38e6b6860e2"
   integrity sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==
-
-"lasso@file:../lib":
-  version "1.0.0"
-  dependencies:
-    cross-fetch "^3.1.5"
-    esbuild "^0.15.5"
-    fastify "^4.5.2"
-    glob "^8.0.3"
-    jsdom "^20.0.0"
-    mkdirp "^1.0.4"
-    nodemon "^2.0.19"
-    pino-pretty "^9.1.0"
-    recursive-readdir "^2.2.2"
-    tailwindcss "^3.1.8"
-    ts-deepmerge "^3.0.0"
-    tsc-alias "^1.7.0"
-    twind "^0.16.17"
-    typescript "^4.8.2"
-    ws "^8.8.1"
 
 levn@~0.3.0:
   version "0.3.0"

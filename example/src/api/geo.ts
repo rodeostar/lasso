@@ -1,5 +1,5 @@
 import { createGeoService, GeoResponse } from "~/components/visualizer/service";
-import type { Handler, Request } from "lasso";
+import type { Handler, Request } from "@rodeostar/lasso";
 
 type GeoParams = {
   years: string;

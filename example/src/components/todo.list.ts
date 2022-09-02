@@ -1,4 +1,4 @@
-import type { FC } from "lasso";
+import type { FC } from "@rodeostar/lasso";
 
 export type TodoItem = {
   userId: number;

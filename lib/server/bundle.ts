@@ -3,7 +3,7 @@ import glob from "glob";
 import path from "path";
 import { paths } from "./consts";
 import { replaceTscAliasPaths } from "tsc-alias";
-import { LibConfig } from "lasso";
+import type { LibConfig } from "../framework/types";
 
 const globOpts = {
   ignore: ["node_modules/**/*"],
