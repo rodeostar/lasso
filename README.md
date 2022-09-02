@@ -13,6 +13,7 @@ Simple typescript framework.
 ### CLI Options:
 
 `--watch` - Dev server mode
+
 `--init`  - Scaffolds a template in an empty directory
 
 
