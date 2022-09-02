@@ -25,7 +25,7 @@ export type LibConfig = {
     scripts?: string[];
   };
   watchMode: boolean;
-  WOOOOOOOOOOOOOOOOOOOOOOOOO?: boolean;
+  __frameworkdev?: boolean;
 };
 
 /** Middleware type, in case we add functionality to the node. */

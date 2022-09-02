@@ -1,7 +1,6 @@
 import { JSDOM } from "jsdom";
-import fetch from "node-fetch";
+import fetch from "cross-fetch";
 
-const jd = new JSDOM();
 const {
   Node,
   Element,
@@ -11,17 +10,9 @@ const {
   document,
   requestAnimationFrame,
   addEventListener,
-} = jd.window;
+} = new JSDOM().window;
 
-const _importDynamic = new Function("modulePath", "return import(modulePath)");
-
-(globalThis as Record<string, unknown>).fetch = async function fetch<T>(
-  ...args: T[]
-) {
-  const { default: fetch } = await _importDynamic("node-fetch");
-  return fetch(...args);
-};
-
+globalThis.fetch = fetch;
 globalThis.requestAnimationFrame = requestAnimationFrame;
 globalThis.document = document;
 globalThis.DOMParser = DOMParser;

@@ -1,9 +1,8 @@
-import glob from "glob";
 import esbuild from "esbuild";
-import { paths } from "./consts";
-
-import { replaceTscAliasPaths } from "tsc-alias";
+import glob from "glob";
 import path from "path";
+import { paths } from "./consts";
+import { replaceTscAliasPaths } from "tsc-alias";
 import { LibConfig } from "lasso";
 
 const globOpts = {
@@ -23,7 +22,7 @@ const browserOpts = (
   platform: "browser",
 });
 
-const dev = (config: LibConfig) => !!config?.WOOOOOOOOOOOOOOOOOOOOOOOOO;
+const isDev = (config: LibConfig) => !!config?.__frameworkdev;
 
 export async function bundleJS(config: LibConfig) {
   const pages = glob.sync(`./src/pages/**/*.ts`, globOpts);
@@ -46,17 +45,13 @@ export async function bundleJS(config: LibConfig) {
 }
 
 export async function bundleApp(config: LibConfig) {
-  const isDev = dev(config);
-  const pattern = (...exts: string[]) =>
-    exts.map((ext) => glob.sync(`./src/**/*${ext}`, globOpts)).flat();
-
-  const entryPoints = pattern(".ts");
+  const entryPoints = glob.sync(`./src/**/*.ts`, globOpts);
 
   await esbuild.build({
     tsconfig: paths.tsConfig,
     target: "es2017",
     entryPoints,
-    outdir: isDev ? paths.pages : paths.build,
+    outdir: isDev(config) ? paths.pages : paths.build,
     legalComments: "none",
     format: "cjs",
     treeShaking: true,
