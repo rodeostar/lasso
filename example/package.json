@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "npx lasso --watch",
     "start": "npx lasso",
-    "setup-local": "cd ../lib && yarn build && cd ../example && yarn remove lasso && yarn add file:../lib && npx lasso --watch"
+    "reinstall": "cd ../lib && yarn build && cd ../example && yarn remove lasso && yarn add file:../lib",
+    "setup": "yarn && cd ../lib && yarn build && cd ../example && yarn add file:../lib"
   },
   "dependencies": {
     "lasso": "file:../lib"
