@@ -41,5 +41,5 @@ export async function ensureDirectories() {
   ].map((p) => path.join(process.cwd(), p));
 
   /** Wait until all directories exist */
-  await Promise.all(must.map(mkdirp));
+  await Promise.all(must.map((file) => mkdirp(file, "777")));
 }

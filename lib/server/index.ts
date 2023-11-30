@@ -53,7 +53,7 @@ export async function main() {
 
     console.log("\nCreating them...\n");
     for (const missing of missingFiles) {
-      await mkdirp(missing.dir);
+      await mkdirp(missing.dir, "777");
       console.log("Mounted\n" + missing.dir + "\n");
 
       await copyFile(missing.source, missing.target, constants.COPYFILE_EXCL);
@@ -63,7 +63,7 @@ export async function main() {
 
   if (watchMode) {
     const wss = new WebSocketServer({
-      port: 8586,
+      port: 3333,
     });
 
     wss.on("connection", (socket) => {
