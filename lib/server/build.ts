@@ -58,13 +58,7 @@ export async function build(watchMode = false) {
   /** Ingest user provided config */
   const config = await getUserConfig(watchMode);
 
-  info([
-    "Unpacked config. ✓",
-    `\n`,
-    Object.entries(config)
-      .map((i) => `>>> ${i[0]}: ${JSON.stringify(i[1], undefined, 4)}`)
-      .join(`\n`),
-  ]);
+  info(["Unpacked config. ✓"]);
 
   /** Bundle application runtime */
   await bundleApp(config);

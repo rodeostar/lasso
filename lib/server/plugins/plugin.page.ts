@@ -18,7 +18,6 @@ export const PluginPages: Plugin = (validator) =>
     "Page plugin enabled. ✓",
     () => true,
     async (doc) => {
-      console.log(doc.page);
       const modulePath = projectDir(doc.page);
 
       /** Dynamic import of the default module */
