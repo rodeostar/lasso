@@ -4,7 +4,6 @@ import { build } from "./build";
 import { attachAPIRoutes } from "./api";
 import { serveStatic } from "./static";
 import { log } from "./logs";
-import { writeFile } from "fs/promises";
 
 export async function startServer(watchMode = false) {
   const fastify = await Fastify({
@@ -12,7 +11,6 @@ export async function startServer(watchMode = false) {
       transport: {
         target: "pino-pretty",
       },
-      prettifier: true,
     },
   });
 

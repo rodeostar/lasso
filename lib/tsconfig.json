@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "declaration": true,
+    "skipLibCheck": true,
     "outDir": "dist",
     "module": "CommonJS",
     "moduleResolution": "node",
@@ -9,6 +10,7 @@
     "target": "ES2017",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "baseUrl": ".",
+    "types": [],
     "paths": {
       "blockdom": ["./blockdom/index.ts"],
       "@rodeostar/lasso": ["./framework/index.ts"]
