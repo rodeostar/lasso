@@ -40,7 +40,7 @@ export const PluginStylesheets: Plugin = (makePlugin) =>
     async (_, conf) => {
       const stylesheets = [];
 
-      /** Attach global JS files to the document */
+      /** Attach stylesheets to the document */
       await Promise.all(
         conf.global.styles.map(
           moveStatic((file) => {
