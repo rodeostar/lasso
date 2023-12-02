@@ -7,6 +7,8 @@ Simple typescript framework.
 `cd lib && yarn`
 `yarn dev`
 
+<img width="670" alt="image" src="https://github.com/rodeostar/lasso/assets/5882632/06104ac7-9394-4ae6-a146-90afb15a15cb">
+
 ### CLI Options:
 
 `--watch` - Dev server mode
