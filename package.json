@@ -1,0 +1,21 @@
+{
+  "name": "lasso-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Lasso TypeScript framework - monorepo",
+  "license": "MIT",
+  "workspaces": [
+    "lib",
+    "example"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=@rodeostar/lasso",
+    "dev": "npm run dev --workspace=@rodeostar/lasso",
+    "start": "npm run start --workspace=@rodeostar/lasso",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
