@@ -1,7 +1,7 @@
 import "../ssr-compat";
 import { paths } from "../consts";
 import { DocumentOptions, __Document } from "../document";
-import { type FC, renderToString } from "../../framework";
+import { type FC, renderToStringWithState } from "../../framework";
 import type { Plugin } from "./index";
 import path from "path";
 
@@ -39,11 +39,12 @@ export const PluginPages: Plugin = (validator) =>
       const outfile = `${paths.static}/${doc.name}.js`;
 
       /** Server side rendering of the template */
-      const body = await renderToString(__Module.default);
+      const { html: body, state } = await renderToStringWithState(__Module.default);
 
-      /** Create a new object and attach the body html and scripts */
+      /** Create a new object and attach the body html, hydration state, and scripts */
       return {
         body,
+        hydrationState: JSON.stringify(state),
         scripts: [outfile],
         ...(__Module?.__Page || {}),
       };

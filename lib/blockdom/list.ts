@@ -1,6 +1,6 @@
 import type { VNode } from "./index";
 
-const getDescriptor = (o: any, p: any) =>
+const getDescriptor = (o: object, p: string | symbol) =>
   Object.getOwnPropertyDescriptor(o, p)!;
 const nodeProto = Node.prototype;
 
@@ -98,7 +98,7 @@ export class VList {
     let endVn1 = ch1[endIdx1];
     let endVn2 = ch2[endIdx2];
 
-    let mapping: any = undefined;
+    let mapping: Record<string | number, number> | undefined = undefined;
     // let noFullRemove = this.hasNoComponent;
 
     while (startIdx1 <= endIdx1 && startIdx2 <= endIdx2) {
@@ -156,7 +156,8 @@ export class VList {
       }
       // -------------------------------------------------------------------
       mapping = mapping || createMapping(ch1, startIdx1, endIdx1);
-      let idxInOld = mapping[startKey2];
+      const key2 = startKey2 ?? "";
+      let idxInOld = mapping[key2];
       if (idxInOld === undefined) {
         cMount.call(startVn2, parent, cFirstNode.call(startVn1) || null);
       } else {
@@ -164,7 +165,7 @@ export class VList {
         cMoveBefore.call(elmToMove, startVn1, null);
         cPatch.call(elmToMove, startVn2, withBeforeRemove);
         ch2[startIdx2] = elmToMove;
-        ch1[idxInOld] = null as any;
+        (ch1 as (VNode | null)[])[idxInOld] = null;
       }
       startVn2 = ch2[++startIdx2];
     }
@@ -233,13 +234,14 @@ export function list(children: VNode[]): VNode<VList> {
 }
 
 function createMapping(
-  ch1: any[],
+  ch1: VNode[],
   startIdx1: number,
   endIdx2: number
-): { [key: string]: any } {
-  let mapping: any = {};
+): Record<string | number, number> {
+  const mapping: Record<string | number, number> = {};
   for (let i = startIdx1; i <= endIdx2; i++) {
-    mapping[ch1[i].key] = i;
+    const k = ch1[i].key;
+    if (k !== undefined) mapping[k] = i;
   }
   return mapping;
 }

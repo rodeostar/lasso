@@ -7,23 +7,22 @@ export { multi } from "./multi";
 export { text, comment } from "./text";
 export { html } from "./html";
 
-export interface VNode<T = any> {
+export interface VNode<T = unknown> {
   mount(parent: HTMLElement, afterNode: Node | null): void;
   moveBefore(other: T | null, afterNode: Node | null): void;
   patch(other: T, withBeforeRemove: boolean): void;
   beforeRemove(): void;
   remove(): void;
   firstNode(): Node | undefined;
-  el?: undefined | HTMLElement | Text;
-  parentEl?: undefined | HTMLElement;
+  el?: Node | undefined;
+  parentEl?: HTMLElement | undefined;
   isOnlyChild?: boolean | undefined;
-  key?: any;
+  key?: string | number | undefined;
   memo?: VNode<T>[];
   node?: VNode<T>;
-  [key: string]: any;
 }
 
-export type BDom = VNode<any>;
+export type BDom = VNode<unknown>;
 
 export function mount(
   vnode: VNode,
@@ -48,7 +47,7 @@ export function remove(vnode: VNode, withBeforeRemove: boolean = false) {
   vnode.remove();
 }
 
-export function withKey(vnode: VNode, key: any) {
+export function withKey(vnode: VNode, key: string | number) {
   vnode.key = key;
   return vnode;
 }

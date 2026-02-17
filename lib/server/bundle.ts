@@ -1,5 +1,5 @@
 import esbuild from "esbuild";
-import glob from "glob";
+import { globSync } from "glob";
 import path from "path";
 import { paths } from "./consts";
 import { replaceTscAliasPaths } from "tsc-alias";
@@ -20,12 +20,13 @@ const browserOpts = (
   format: "iife",
   treeShaking: true,
   platform: "browser",
+  sourcemap: mode === "development",
 });
 
 const isDev = (config: LibConfig) => !!config?.__frameworkdev;
 
 export async function bundleJS(config: LibConfig) {
-  const pages = glob.sync(`./src/pages/**/*.ts`, globOpts);
+  const pages = globSync(`./src/pages/**/*.ts`, globOpts);
 
   await esbuild.build({
     outdir: paths.static,
@@ -45,7 +46,7 @@ export async function bundleJS(config: LibConfig) {
 }
 
 export async function bundleApp(config: LibConfig) {
-  const entryPoints = glob.sync(`./src/**/*.ts`, globOpts);
+  const entryPoints = globSync(`./src/**/*.ts`, globOpts);
 
   await esbuild.build({
     tsconfig: paths.tsConfig,
@@ -56,6 +57,7 @@ export async function bundleApp(config: LibConfig) {
     format: "cjs",
     treeShaking: true,
     platform: "node",
+    sourcemap: config.mode === "development",
   });
 
   await replaceTscAliasPaths({

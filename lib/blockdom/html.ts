@@ -18,7 +18,7 @@ class VHtml {
     this.parentEl = parent;
     const template = document.createElement("template");
     template.innerHTML = this.html;
-    this.content = [...(template.content.childNodes as any)];
+    this.content = [...template.content.childNodes];
     for (let elem of this.content) {
       nodeInsertBefore.call(parent, elem, afterNode);
     }
@@ -48,7 +48,7 @@ class VHtml {
       const afterNode = this.content[0];
       const template = document.createElement("template");
       template.innerHTML = html2;
-      const content = [...(template.content.childNodes as any)];
+      const content = [...template.content.childNodes];
       for (let elem of content) {
         nodeInsertBefore.call(parent, elem, afterNode);
       }

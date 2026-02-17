@@ -1,20 +1,28 @@
 {
   "compilerOptions": {
     "declaration": true,
+    "declarationMap": true,
     "skipLibCheck": true,
     "outDir": "dist",
     "module": "CommonJS",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "target": "ES2017",
+    "target": "ES2022",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "baseUrl": ".",
     "types": [],
     "paths": {
       "blockdom": ["./blockdom/index.ts"],
       "@rodeostar/lasso": ["./framework/index.ts"]
-    }
+    },
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
   },
+  "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist", "template"]
 }

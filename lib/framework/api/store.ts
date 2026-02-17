@@ -1,5 +1,6 @@
-import { VComponent } from "../internal";
+import type { VComponent } from "../internal";
 import { FC } from "../types";
+import { scheduleRendering } from "../internal/schedule";
 
 export interface Stateful<S, A> {
   state: () => S;
@@ -8,10 +9,16 @@ export interface Stateful<S, A> {
 
 export type FCS<T, S, A> = FC<T & Stateful<S, A>>;
 
+type VComponentAny = VComponent<unknown>;
+
+/**
+ * Global state store with named actions. Subscribe in components via connect(store).
+ * Subscriptions are cleared on component unmount.
+ */
 export class Store<State, Actions extends string> {
   internalState: State;
   events: Record<string, (state: State) => State> = {};
-  subscriptions: VComponent[];
+  subscriptions: VComponentAny[] = [];
 
   constructor(
     state: State,
@@ -19,32 +26,36 @@ export class Store<State, Actions extends string> {
   ) {
     this.internalState = state;
     this.events = callbacks;
-    this.subscriptions = [];
   }
 
   state() {
     return this.internalState;
   }
 
-  async dispatch(action: Actions, cb?: (state: State) => State) {
-    const compute = cb || ((state: State) => state);
+  dispatch(action: Actions, cb?: (state: State) => State) {
+    const compute = cb ?? ((state: State) => state);
 
     if (action in this.events) {
-      this.internalState = await this.events[action].call(
+      this.internalState = this.events[action].call(
         this,
         compute(this.internalState)
-      );
+      ) as State;
 
       for (const subscription of this.subscriptions) {
-        if (subscription) {
-          await subscription.patch();
+        if (subscription && !subscription.isDestroyed) {
+          scheduleRendering(subscription);
         }
       }
     }
   }
 
-  subscribe(vnode: VComponent) {
+  subscribe(vnode: VComponentAny) {
     this.subscriptions.push(vnode);
     return this;
+  }
+
+  /** Remove a component from subscriptions (call from component beforeRemove). */
+  unsubscribe(vnode: VComponentAny) {
+    this.subscriptions = this.subscriptions.filter((s) => s !== vnode);
   }
 }

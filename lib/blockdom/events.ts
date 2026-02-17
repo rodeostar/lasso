@@ -1,6 +1,6 @@
 import { config } from "./config";
 
-type EventHandlerSetter = (this: HTMLElement, data: any) => void;
+type EventHandlerSetter = (this: HTMLElement, data: unknown) => void;
 
 interface EventHandlerCreator {
   setup: EventHandlerSetter;
@@ -28,18 +28,18 @@ function createElementHandler(evName: string, capture: boolean = false): EventHa
   function listener(ev: Event) {
     const currentTarget = ev.currentTarget;
     if (!currentTarget || !document.contains(currentTarget as HTMLElement)) return;
-    const data = (currentTarget as any)[eventKey];
+    const data = (currentTarget as HTMLElement & Record<string, unknown>)[eventKey];
     if (!data) return;
     config.mainEventHandler(data, ev, currentTarget);
   }
 
-  function setup(this: HTMLElement, data: any) {
-    (this as any)[eventKey] = data;
+  function setup(this: HTMLElement, data: unknown) {
+    (this as HTMLElement & Record<string, unknown>)[eventKey] = data;
     this.addEventListener(evName, listener, { capture });
   }
 
-  function update(this: HTMLElement, data: any) {
-    (this as any)[eventKey] = data;
+  function update(this: HTMLElement, data: unknown) {
+    (this as HTMLElement & Record<string, unknown>)[eventKey] = data;
   }
 
   return { setup, update };
@@ -55,10 +55,11 @@ function createSyntheticHandler(evName: string, capture: boolean = false): Event
   }
   setupSyntheticEvent(evName, eventKey, capture);
   const currentId = nextSyntheticEventId++;
-  function setup(this: HTMLElement, data: any) {
-    const _data = (this as any)[eventKey] || {};
+  function setup(this: HTMLElement, data: unknown) {
+    const el = this as HTMLElement & Record<string, unknown>;
+    const _data = (el[eventKey] as Record<number, unknown>) || {};
     _data[currentId] = data;
-    (this as any)[eventKey] = _data;
+    el[eventKey] = _data;
   }
   return { setup, update: setup };
 }
@@ -66,14 +67,14 @@ function createSyntheticHandler(evName: string, capture: boolean = false): Event
 function nativeToSyntheticEvent(eventKey: string, event: Event) {
   let dom = event.target;
   while (dom !== null) {
-    const _data = (dom as any)[eventKey];
+    const _data = (dom as Node & Record<string, unknown>)[eventKey];
     if (_data) {
       for (const data of Object.values(_data)) {
         const stopped = config.mainEventHandler(data, event, dom);
         if (stopped) return;
       }
     }
-    dom = (dom as any).parentNode;
+    dom = (dom as Node).parentNode;
   }
 }
 

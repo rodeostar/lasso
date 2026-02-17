@@ -8,7 +8,10 @@ import { log } from "./logs";
 const { info, logs } = log;
 
 export const attachAPIRoutes = async (fastify: FastifyInstance) => {
-  const apiFiles = await recursiveReadDir(paths.api);
+  const allApiFiles = await recursiveReadDir(paths.api);
+  const apiFiles = allApiFiles.filter(
+    (f) => f.endsWith(".js") && !f.endsWith(".js.map")
+  );
 
   await Promise.all(
     apiFiles.map(async (filepath) => {

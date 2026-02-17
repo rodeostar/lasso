@@ -12,6 +12,8 @@ export interface DocumentOptions {
   name?: string;
   page?: string;
   mode?: "production" | "development";
+  /** Serialized hydration state for client (JSON string). Injected as window.__LASSO_STATE__. */
+  hydrationState?: string;
 }
 
 /** Simple HTML minifier */
@@ -30,7 +32,12 @@ const __Document = ({
   scripts,
   stylesheets,
   mode,
+  hydrationState,
 }: DocumentOptions) => {
+  const stateScript =
+    hydrationState != null
+      ? `<script>window.__LASSO_STATE__=${hydrationState};</script>`
+      : "";
   const template = `
   <!doctype html>
   <html>
@@ -45,6 +52,7 @@ const __Document = ({
     </head>
     <body>
       <app-root>${body}</app-root>
+      ${stateScript}
 
       ${(scripts || [])
         .map((src) => `<script src="/${src.replace(/\\/g, "/")}"></script>`)

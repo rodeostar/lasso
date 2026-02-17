@@ -5,10 +5,11 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "target": "ES2017",
+    "target": "ES2022",
     "baseUrl": ".",
-    "paths": {
-      "~/*": ["src/*"]
-    }
-  }
+    "paths": { "~/*": ["src/*"] },
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts"]
 }

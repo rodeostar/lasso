@@ -1,17 +1,23 @@
 import { render } from "./render";
 import type { FC } from "../types";
 
-/** Render a component tree and give back its string form, for SSR */
-export async function renderToString<T>(Comp: FC<T>) {
-  /** Render the component in the node virtual document */
+/** Hydration state shape (extend for app-specific state). */
+export type HydrationState = Record<string, unknown>;
+
+/** Render a component tree and return HTML plus serializable state for hydration. */
+export async function renderToStringWithState<T>(
+  Comp: FC<T>
+): Promise<{ html: string; state: HydrationState }> {
   await render(Comp, document.body);
-
-  /** Grab the document's html */
   const html = document.body.innerHTML.toString();
-
-  /** Reset the virtual document's html */
   document.body.innerHTML = "";
+  /** State can be extended later (e.g. per-component useState snapshot). */
+  const state: HydrationState = {};
+  return { html, state };
+}
 
-  /** Return styles and html */
+/** Render a component tree and give back its string form, for SSR */
+export async function renderToString<T>(Comp: FC<T>): Promise<string> {
+  const { html } = await renderToStringWithState(Comp);
   return html;
 }

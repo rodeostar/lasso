@@ -1,6 +1,7 @@
 import type { VNode } from "./index";
 
-const getDescriptor = (o: any, p: any) => Object.getOwnPropertyDescriptor(o, p)!;
+const getDescriptor = (o: object, p: string | symbol) =>
+  Object.getOwnPropertyDescriptor(o, p)!;
 const nodeProto = Node.prototype;
 const characterDataProto = CharacterData.prototype;
 
@@ -11,7 +12,7 @@ const nodeRemoveChild = nodeProto.removeChild;
 abstract class VSimpleNode {
   text: string;
   parentEl?: HTMLElement | undefined;
-  el?: any;
+  el?: Node | undefined;
 
   constructor(text: string) {
     this.text = text;
@@ -73,7 +74,7 @@ export function comment(str: string): VNode<VComment> {
   return new VComment(str);
 }
 
-export function toText(value: any): string {
+export function toText(value: unknown): string {
   switch (typeof value) {
     case "string":
       return value;
@@ -82,6 +83,6 @@ export function toText(value: any): string {
     case "boolean":
       return value ? "true" : "false";
     default:
-      return value || "";
+      return value != null ? String(value) : "";
   }
 }

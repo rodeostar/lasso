@@ -1,10 +1,10 @@
 import path from "path";
-import mkdirp from "mkdirp";
+import { mkdir } from "fs/promises";
 import { pathToFileURL } from "url";
 import { rm } from "fs/promises";
 import { existsSync } from "fs";
 
-export const paths = {
+const pathsMap = {
   input: "src",
   output: ".lasso",
   build: ".lasso/dist",
@@ -13,11 +13,15 @@ export const paths = {
   api: ".lasso/dist/api",
   manifest: ".lasso/manifest.js",
   tsConfig: "tsconfig.json",
-  /** Utility to get absolute paths */
-  withBase(key: string) {
-    if (key in this && key !== "withBase") {
-      return pathToFileURL(path.join(process.cwd(), this[key])).toString();
+};
+
+export const paths = {
+  ...pathsMap,
+  withBase(key: string): string | undefined {
+    if (key in pathsMap) {
+      return pathToFileURL(path.join(process.cwd(), pathsMap[key as keyof typeof pathsMap])).toString();
     }
+    return undefined;
   },
 };
 
@@ -41,5 +45,5 @@ export async function ensureDirectories() {
   ].map((p) => path.join(process.cwd(), p));
 
   /** Wait until all directories exist */
-  await Promise.all(must.map((file) => mkdirp(file, "777")));
+  await Promise.all(must.map((file) => mkdir(file, { recursive: true, mode: 0o777 })));
 }

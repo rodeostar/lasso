@@ -1,7 +1,7 @@
 import { Configuration } from "twind";
 import type { VComponent } from "./internal";
 import type { VNode } from "../blockdom";
-export type { VNode };
+export type { VNode, VComponent };
 import type { FastifyInstance } from "fastify";
 import type { Store } from "./api/store";
 
@@ -29,15 +29,15 @@ export type LibConfig = {
 };
 
 /** Middleware type, in case we add functionality to the node. */
-export type VXNode<T = any> = VNode<T>;
+export type VXNode<T = unknown> = VNode<T>;
 
 /** Template compiler, takes virtual nodes and returns a compiled block */
-export type TemplateCompiler = (args: VXNode[]) => VNode<any>;
+export type TemplateCompiler = (args: VXNode[]) => VNode;
 
 /** HTML parser */
 export type CollectHTML = (
   strings: TemplateStringsArray,
-  ...args: any[]
+  ...args: unknown[]
 ) => VNode;
 
 /** API methods provided to the user at render time */
@@ -52,10 +52,10 @@ export type DOMTools<T> = {
 };
 
 /** Functional component instance */
-export type FCInstance<T = any> = (tools: DOMTools<T>) => VNode;
+export type FCInstance<T = Record<string, never>> = (tools: DOMTools<T>) => VNode;
 
 /** Functional component, returns an FCInstance */
-export type FC<T = any> = (props?: T) => FCInstance<T>;
+export type FC<T = Record<string, never>> = (props?: T) => FCInstance<T>;
 
 /** State Dispatcher, used for useState hooks */
 export type StateDispatch<T> = [() => T, (fn: T | (() => Promise<T>)) => void];
@@ -77,3 +77,6 @@ export type SideEffect = () => void | Promise<() => void>;
 
 /** Dependencies to trigger a given effect */
 export type Deps<T> = () => T;
+
+/** Error boundary: called when a component throws during mount or patch */
+export type ErrorBoundaryHandler = (error: unknown, component: VComponent<unknown>) => void;

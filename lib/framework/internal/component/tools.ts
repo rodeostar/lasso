@@ -6,12 +6,13 @@ import { css } from "../../internal/style";
 
 export function getDomTools<T>(vnode: VComponent<T>): DOMTools<T> {
   return {
-    html,
+    html: html as DOMTools<T>["html"],
     css,
-    props: vnode?.props || ({} as T),
-    vnode,
+    props: vnode?.props ?? ({} as T),
+    vnode: vnode as DOMTools<T>["vnode"],
     connect<State, Actions extends string>(store: Store<State, Actions>) {
-      store.subscribe(vnode);
+      store.subscribe(vnode as VComponent<unknown>);
+      vnode.stores.push(store);
       return store;
     },
   };

@@ -10,6 +10,6 @@
     "setup": "yarn && cd ../lib && yarn build && cd ../example && yarn add file:../lib"
   },
   "dependencies": {
-    "@rodeostar/lasso": "1.0.6"
+    "@rodeostar/lasso": "*"
   }
 }

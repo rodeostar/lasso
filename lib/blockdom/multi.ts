@@ -1,6 +1,7 @@
 import type { VNode } from "./index";
 
-const getDescriptor = (o: any, p: any) => Object.getOwnPropertyDescriptor(o, p)!;
+const getDescriptor = (o: object, p: string | symbol) =>
+  Object.getOwnPropertyDescriptor(o, p)!;
 const nodeProto = Node.prototype;
 const nodeInsertBefore = nodeProto.insertBefore;
 const nodeSetTextContent = getDescriptor(nodeProto, "textContent").set!;

@@ -1,20 +1,38 @@
 import type { StateDispatch } from "../types";
-import { VirtualComponentContext } from "../context";
+import { VirtualComponentContext, globalErrorHandler } from "../context";
 import { clientOnly } from "../util";
 import { scheduleRendering } from "../internal";
 
-/** Utility to manage state within a component */
-export function useState<T>(value: T): StateDispatch<T> {
+/**
+ * React-like local state for a component.
+ * @param initialValue - Initial state value.
+ * @returns Tuple of [getter, setter]. Setter accepts a value or () => Promise<T>.
+ * @example
+ * const [count, setCount] = useState(0);
+ * setCount(count() + 1);
+ * setCount(async () => fetchCount());
+ */
+export function useState<T>(initialValue: T): StateDispatch<T> {
+  let value = initialValue;
   const vnode = VirtualComponentContext.current;
 
-  /** Sync/Async state */
-  const setStateAsync = async (updater: T | (() => Promise<T>)) => {
-    /** Check if the value is static or a method */
-    value = updater instanceof Function ? await updater() : updater;
-
-    /** On the client, requestAnimationFrames */
-    clientOnly(() => scheduleRendering(vnode));
+  const setState = (updater: T | (() => Promise<T>)) => {
+    const run = async () => {
+      try {
+        value = typeof updater === "function" ? await (updater as () => Promise<T>)() : updater;
+        clientOnly(() => scheduleRendering(vnode!));
+      } catch (err) {
+        if (globalErrorHandler && vnode) {
+          try {
+            globalErrorHandler(err, vnode as import("../types").VComponent<unknown>);
+          } catch (_) {
+            /* ignore */
+          }
+        }
+      }
+    };
+    void run();
   };
 
-  return [() => value, setStateAsync];
+  return [() => value, setState];
 }

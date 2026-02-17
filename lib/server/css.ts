@@ -1,7 +1,10 @@
 import { getStyleTagProperties, virtualSheet } from "twind/server";
 import { setup, Configuration, tw } from "twind";
 
-/** Setup the virtual stylesheet */
+/**
+ * Twind (Tailwind-compatible runtime) for server-side class-to-CSS.
+ * For new projects, consider Tailwind 4 (PostCSS) or UnoCSS and a custom plugin that reads StylesCache.
+ */
 const sheet = virtualSheet();
 
 export function collectStyles(config: Partial<Configuration> | undefined) {

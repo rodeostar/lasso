@@ -8,10 +8,10 @@ import path from "path";
 import recursiveReadDir from "recursive-readdir";
 import { constants, copyFile } from "fs/promises";
 import { existsSync } from "fs";
-import mkdirp from "mkdirp";
+import { mkdir } from "fs/promises";
 const args = process.argv.slice(2);
 const watchMode = args.includes("--watch");
-const init = args.includes("--init");
+const init = args.includes("--init") || args.includes("create");
 
 let sockets: WebSocket.WebSocket[] = [];
 
@@ -53,7 +53,7 @@ export async function main() {
 
     console.log("\nCreating them...\n");
     for (const missing of missingFiles) {
-      await mkdirp(missing.dir, "777");
+      await mkdir(missing.dir, { recursive: true, mode: 0o777 });
       console.log("Mounted\n" + missing.dir + "\n");
 
       await copyFile(missing.source, missing.target, constants.COPYFILE_EXCL);

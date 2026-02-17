@@ -13,7 +13,7 @@ import type { VNode } from "./index";
 import { VMulti } from "./multi";
 import { toText } from "./text";
 
-const getDescriptor = (o: any, p: any) =>
+const getDescriptor = (o: object, p: string | symbol) =>
   Object.getOwnPropertyDescriptor(o, p)!;
 const nodeProto = Node.prototype;
 const elementProto = Element.prototype;
@@ -29,7 +29,7 @@ const NO_OP = () => {};
 // Main compiler code
 // -----------------------------------------------------------------------------
 
-export type BlockType = (data?: any[], children?: VNode[]) => VNode;
+export type BlockType = (data?: unknown[], children?: VNode[]) => VNode;
 
 const cache: { [key: string]: BlockType } = {};
 
@@ -60,7 +60,7 @@ export function createBlock(str: string): BlockType {
   );
   const node = doc.firstChild!.firstChild!;
   if (config.shouldNormalizeDom) {
-    normalizeNode(node as any);
+    normalizeNode(node as HTMLElement | Text);
   }
 
   // step 1: prepare intermediate tree
@@ -93,7 +93,7 @@ function normalizeNode(node: HTMLElement | Text) {
     }
   }
   for (let i = node.childNodes.length - 1; i >= 0; --i) {
-    normalizeNode(node.childNodes.item(i) as any);
+    normalizeNode(node.childNodes.item(i) as HTMLElement | Text);
   }
 }
 
@@ -256,7 +256,7 @@ function addRef(tree: IntermediateTree) {
   tree.isRef = true;
   do {
     tree.refN++;
-  } while ((tree = tree.parent as any));
+  } while ((tree = tree.parent) !== null);
 }
 
 function parentTree(tree: IntermediateTree): IntermediateTree | null {
@@ -278,13 +278,15 @@ interface RefCollector {
   getVal: Function;
 }
 
-export type Setter<T = any> = (this: T, value: any) => void;
-export type Updater<T = any> = (this: T, value: any, oldVal: any) => void;
+export type Setter<T = HTMLElement> = (this: T, value: unknown) => void;
+export type Updater<T = HTMLElement> = (this: T, value: unknown, oldVal: unknown) => void;
 
 interface Location {
   refIdx: number;
-  setData: Setter;
-  updateData: Updater;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setData: (this: any, value: any) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  updateData: (this: any, value: any, oldVal?: any) => void;
 }
 
 interface IndexedLocation extends Location {
@@ -394,15 +396,15 @@ function updateCtx(ctx: BlockCtx, tree: IntermediateTree) {
         break;
       case "attribute": {
         const refIdx = info.refIdx!;
-        let updater: any;
-        let setter: any;
+        let updater: Setter<HTMLElement> | Updater<HTMLElement>;
+        let setter: Setter<HTMLElement>;
         if (isProp(info.tag!, info.name!)) {
           const setProp = makePropSetter(info.name!);
           setter = setProp;
           updater = setProp;
         } else if (info.name === "class") {
-          setter = setClass;
-          updater = updateClass;
+          setter = setClass as Setter<HTMLElement>;
+          updater = updateClass as Updater<HTMLElement>;
         } else {
           setter = createAttrUpdater(info.name!);
           updater = setter;
@@ -410,8 +412,8 @@ function updateCtx(ctx: BlockCtx, tree: IntermediateTree) {
         ctx.locations.push({
           idx: info.idx,
           refIdx,
-          setData: setter,
-          updateData: updater,
+          setData: setter as Location["setData"],
+          updateData: updater as Location["updateData"],
         });
         break;
       }
@@ -419,8 +421,8 @@ function updateCtx(ctx: BlockCtx, tree: IntermediateTree) {
         ctx.locations.push({
           idx: info.idx,
           refIdx: info.refIdx!,
-          setData: attrsSetter,
-          updateData: attrsUpdater,
+          setData: attrsSetter as Location["setData"],
+          updateData: attrsUpdater as Location["updateData"],
         });
         break;
       case "handler": {
@@ -465,9 +467,9 @@ function buildBlock(template: HTMLElement, ctx: BlockCtx): BlockType {
       }
       remove() {
         super.remove();
-        for (let cbRef of cbRefs) {
-          let fn = (this as any).data[cbRef];
-          fn(null);
+        for (const cbRef of cbRefs) {
+          const fn = (this as unknown as BlockWithData).data?.[cbRef] as ((v: unknown) => void) | undefined;
+          if (fn) fn(null);
         }
       }
     };
@@ -476,21 +478,26 @@ function buildBlock(template: HTMLElement, ctx: BlockCtx): BlockType {
   if (ctx.children.length) {
     B = class extends B {
       children: (VNode | undefined)[] | undefined;
-      constructor(data?: any[], children?: VNode[]) {
+      constructor(data?: unknown[], children?: VNode[]) {
         super(data);
         this.children = children;
       }
     };
     B.prototype.beforeRemove = VMulti.prototype.beforeRemove;
-    return (data?: any[], children: (VNode | undefined)[] = []) =>
-      new B(data, children);
+    return (data?: unknown[], children: (VNode | undefined)[] = []) =>
+      new B(data, children) as unknown as VNode;
   }
 
-  return (data?: any[]) => new B(data);
+  return (data?: unknown[]) => new B(data) as unknown as VNode;
 }
 
+interface BlockWithData {
+  data: unknown[] | undefined;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T> = new (...args: any[]) => T;
-type BlockClass = Constructor<VNode<any>>;
+type BlockClass = Constructor<VNode<unknown>>;
 
 function createBlockClass(template: HTMLElement, ctx: BlockCtx): BlockClass {
   const { refN, collectors, children } = ctx;
@@ -515,11 +522,11 @@ function createBlockClass(template: HTMLElement, ctx: BlockCtx): BlockClass {
   class Block {
     el: HTMLElement | undefined;
     parentEl?: HTMLElement | undefined;
-    data: any[] | undefined;
+    data: unknown[] | undefined;
     children?: (VNode | undefined)[];
     refs: Node[] | undefined;
 
-    constructor(data?: any[]) {
+    constructor(data?: unknown[]) {
       this.data = data;
     }
 
@@ -588,7 +595,7 @@ function createBlockClass(template: HTMLElement, ctx: BlockCtx): BlockClass {
             const loc = childrenLocs[i];
             const afterNode = loc.afterRefIdx ? refs[loc.afterRefIdx] : null;
             child.isOnlyChild = loc.isOnlyChild;
-            child.mount(refs[loc.parentRefIdx] as any, afterNode);
+            child.mount(refs[loc.parentRefIdx] as HTMLElement, afterNode);
           }
         }
       }
@@ -639,25 +646,27 @@ function createBlockClass(template: HTMLElement, ctx: BlockCtx): BlockClass {
           } else if (child2) {
             const loc = childrenLocs[i];
             const afterNode = loc.afterRefIdx ? refs[loc.afterRefIdx] : null;
-            child2.mount(refs[loc.parentRefIdx] as any, afterNode);
+            child2.mount(refs[loc.parentRefIdx] as HTMLElement, afterNode);
             children1![i] = child2;
           }
         }
       }
     };
   }
-  return Block;
+  return Block as unknown as BlockClass;
 }
 
-function setText(this: Text, value: any) {
+function setText(this: Text, value: unknown) {
   characterDataSetData.call(this, toText(value));
 }
 
 function makeRefSetter(
   index: number,
-  refs: (() => void)[][]
+  refList: (() => void)[][]
 ): Setter<HTMLElement> {
-  return function setRef(this: HTMLElement, fn: any) {
-    refs[refs.length - 1][index] = () => fn(this);
+  return function setRef(this: HTMLElement, fn: unknown) {
+    const el = this;
+    refList[refList.length - 1][index] =
+      typeof fn === "function" ? () => (fn as (el: HTMLElement) => void)(el) : () => {};
   };
 }

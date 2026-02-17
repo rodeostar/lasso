@@ -66,8 +66,9 @@ export async function build(watchMode = false) {
   /** Bundle client side scripts */
   await bundleJS(config);
 
-  /** Get all routes in the pages directory */
-  const pages = await readdir(paths.pages);
+  /** Get all routes in the pages directory (only .js, not .map) */
+  const allFiles = await readdir(paths.pages);
+  const pages = allFiles.filter((f) => f.endsWith(".js") && !f.endsWith(".js.map"));
 
   return pages.map((file) =>
     createPageRoute(

@@ -14,7 +14,7 @@ export const PluginHMR: Plugin = (validator) =>
       await writeFile(
         hmrclient,
         `(function() {
-            const ws = new WebSocket("ws://localhost:8586");
+            const ws = new WebSocket("ws://localhost:3333");
             ws.onmessage = (event) => event.data === "1" && window.location.reload()
           })();`,
         "utf-8"
